@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELOCITY | Premium Sports Wear</title>
+    <style>
+        :root {
+            --primary: #000000;
+            --accent: #ff3e3e;
+            --light: #f4f4f4;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--white); color: var(--primary); }
+        
+        /* Navigation */
+        nav { display: flex; justify-content: space-between; padding: 20px 5%; align-items: center; border-bottom: 1px solid #eee; sticky top: 0; background: white; z-index: 100; }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; }
+        .nav-links a { margin: 0 15px; text-decoration: none; color: var(--primary); font-weight: 500; font-size: 14px; }
+        .cart-btn { background: var(--primary); color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+
+        /* Sections */
+        section { padding: 60px 5%; }
+        h2 { font-size: 32px; margin-bottom: 30px; text-transform: uppercase; border-left: 5px solid var(--accent); padding-left: 15px; }
+
+        /* Grid System */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .card { border: 1px solid #eee; padding: 15px; transition: 0.3s; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card img { width: 100%; height: 250px; object-fit: cover; background: #f9f9f9; margin-bottom: 15px; border-radius: 4px; }
+        .badge { position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; padding: 4px 10px; font-size: 10px; font-weight: bold; border-radius: 3px; }
+        
+        .price { font-weight: bold; color: var(--accent); font-size: 18px; margin: 10px 0; }
+        .buy-btn { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; cursor: pointer; font-weight: bold; }
+        .buy-btn:hover { background: #333; }
+
+        /* History Modal */
+        #history-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 50px rgba(0,0,0,0.2); z-index: 1000; width: 90%; max-width: 500px; }
+        .close-history { float: right; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">VELOCITY.</div>
+    <div class="nav-links">
+        <a href="#new">New Arrivals</a>
+        <a href="#trending">Trending</a>
+        <a href="#limited">Limited</a>
+        <a href="#" onclick="toggleHistory()">Purchase History</a>
+    </div>
+    <div class="cart-btn">Cart (0)</div>
+</nav>
+
+<section id="new">
+    <h2>New Arrivals</h2>
+    <div class="product-grid">
+        <div class="card">
+            <div class="badge">NEW</div>
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400" alt="Red Sneakers">
+            <h3>Aero-Flight Runner</h3>
+            <p>Ultimate performance shoes.</p>
+            <div class="price">$120.00</div>
+            <button class="buy-btn" onclick="buy('Aero-Flight Runner', 120)">Purchase Now</button>
+        </div>
+        <div class="card">
+            <div class="badge">NEW</div>
+            <img src="https://images.unsplash.com/photo-1580087443155-251f22df815c?auto=format&fit=crop&w=400" alt="Football Shirt">
+            <h3>V-League Jersey</h3>
+            <p>Moisture-wicking tech.</p>
+            <div class="price">$75.00</div>
+            <button class="buy-btn" onclick="buy('V-League Jersey', 75)">Purchase Now</button>
+        </div>
+    </div>
+</section>
+
+<section id="trending">
+    <h2>Trending</h2>
+    <div class="product-grid">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?auto=format&fit=crop&w=400" alt="Basketball shoes">
+            <h3>Dunk Master X</h3>
+            <p>Basketball series.</p>
+            <div class="price">$150.00</div>
+            <button class="buy-btn" onclick="buy('Dunk Master X', 150)">Purchase Now</button>
+        </div>
+    </div>
+</section>
+
+<section id="limited" style="background: #000; color: white;">
+    <h2 style="color: white; border-color: #fff;">Limited Edition</h2>
+    <div class="product-grid">
+        <div class="card" style="border-color: #333;">
+            <div class="badge" style="background: gold; color: black;">RARE</div>
+            <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=400" alt="Rare Sneakers">
+            <h3>Phantom Stealth VIII</h3>
+            <p>Only 100 pairs made.</p>
+            <div class="price" style="color: gold;">$450.00</div>
+            <button class="buy-btn" style="background: gold; color: black;" onclick="buy('Phantom Stealth VIII', 450)">Claim Pair</button>
+        </div>
+    </div>
+</section>
+
+<div id="history-modal">
+    <span class="close-history" onclick="toggleHistory()">X</span>
+    <h3>Your Purchase History</h3>
+    <hr><br>
+    <div id="history-list">No purchases yet.</div>
+</div>
+
+<script>
+    let history = [];
+
+    function buy(name, price) {
+        const date = new Date().toLocaleDateString();
+        history.push({ name, price, date });
+        alert(`Successfully purchased ${name}!`);
+        updateHistory();
+    }
+
+    function updateHistory() {
+        const list = document.getElementById('history-list');
+        if (history.length === 0) return;
+        
+        list.innerHTML = history.map(item => 
+            `<p><strong>${item.name}</strong> - $${item.price} <br><small>${item.date}</small></p><hr style="margin:10px 0; opacity:0.1">`
+        ).join('');
+    }
+
+    function toggleHistory() {
+        const modal = document.getElementById('history-modal');
+        modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+
+</body>
+</html>
+
+
+
