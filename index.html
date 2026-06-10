@@ -1,141 +1,663 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VELOCITY | Premium Sports Wear</title>
-    <style>
-        :root {
-            --primary: #000000;
-            --accent: #ff3e3e;
-            --light: #f4f4f4;
-            --white: #ffffff;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--white); color: var(--primary); }
-        
-        /* Navigation */
-        nav { display: flex; justify-content: space-between; padding: 20px 5%; align-items: center; border-bottom: 1px solid #eee; sticky top: 0; background: white; z-index: 100; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: -1px; }
-        .nav-links a { margin: 0 15px; text-decoration: none; color: var(--primary); font-weight: 500; font-size: 14px; }
-        .cart-btn { background: var(--primary); color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MuscleTrack — Dream to Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Sections */
-        section { padding: 60px 5%; }
-        h2 { font-size: 32px; margin-bottom: 30px; text-transform: uppercase; border-left: 5px solid var(--accent); padding-left: 15px; }
+  :root {
+    --navy:   #0D1B2A;
+    --navy2:  #0D2137;
+    --teal:   #00B4D8;
+    --teal2:  #0077B6;
+    --mint:   #90E0EF;
+    --accent: #06D6A0;
+    --gold:   #FFD166;
+    --white:  #FFFFFF;
+    --offwhite: #F0F8FF;
+    --gray:   #8ECAE6;
+    --gray2:  #4A6C7A;
+    --text:   #CAE9F5;
+  }
 
-        /* Grid System */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .card { border: 1px solid #eee; padding: 15px; transition: 0.3s; position: relative; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .card img { width: 100%; height: 250px; object-fit: cover; background: #f9f9f9; margin-bottom: 15px; border-radius: 4px; }
-        .badge { position: absolute; top: 20px; right: 20px; background: var(--accent); color: white; padding: 4px 10px; font-size: 10px; font-weight: bold; border-radius: 3px; }
-        
-        .price { font-weight: bold; color: var(--accent); font-size: 18px; margin: 10px 0; }
-        .buy-btn { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; cursor: pointer; font-weight: bold; }
-        .buy-btn:hover { background: #333; }
+  html { scroll-behavior: smooth; }
 
-        /* History Modal */
-        #history-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 50px rgba(0,0,0,0.2); z-index: 1000; width: 90%; max-width: 500px; }
-        .close-history { float: right; cursor: pointer; font-weight: bold; }
-    </style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 64px;
+    background: rgba(13, 27, 42, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,180,216,0.12);
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--teal); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--gray); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .badge-pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.25rem 0.9rem;
+    background: var(--teal); color: var(--navy);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px;
+    border-radius: 99px;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 5vw 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: 0.18; pointer-events: none;
+  }
+  .orb1 { width: 600px; height: 600px; background: var(--teal); top: -150px; right: -100px; }
+  .orb2 { width: 400px; height: 400px; background: var(--accent); bottom: -100px; left: -80px; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 1.8rem;
+  }
+  .step-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--teal);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+  .eyebrow-text {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 2px;
+    color: var(--teal); text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(3.2rem, 9vw, 7rem);
+    font-weight: 700; line-height: 1.0;
+    color: var(--white);
+    letter-spacing: -2px;
+    margin-bottom: 1.2rem;
+  }
+  .hero-title .accent { color: var(--teal); }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 400; color: var(--gray);
+    max-width: 560px; line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-cta-row { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--teal); color: var(--navy);
+    font-weight: 700; font-size: 0.9rem;
+    border: none; border-radius: 8px;
+    text-decoration: none; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,180,216,0.35); }
+  .btn-ghost {
+    padding: 0.85rem 2rem;
+    background: transparent; color: var(--gray);
+    font-weight: 600; font-size: 0.9rem;
+    border: 1px solid rgba(142,202,230,0.25); border-radius: 8px;
+    text-decoration: none; cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(142,202,230,0.12);
+    flex-wrap: wrap;
+  }
+  .stat-item .num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.2rem; font-weight: 700; color: var(--white);
+    line-height: 1;
+  }
+  .stat-item .num span { color: var(--teal); }
+  .stat-item .label { font-size: 0.78rem; color: var(--gray2); margin-top: 0.25rem; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 5vw; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .section-tag .bar { width: 20px; height: 2px; border-radius: 1px; }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700; line-height: 1.1;
+    color: var(--white); letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--gray2); max-width: 520px;
+    line-height: 1.7; margin-bottom: 3rem;
+  }
+
+  /* ── DREAM ── */
+  #dream { background: var(--offwhite); color: var(--navy); }
+  #dream .section-title { color: var(--navy); }
+  #dream .section-sub { color: var(--gray2); }
+  #dream .section-tag { color: var(--teal2); }
+
+  .dream-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+
+  .quote-card {
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .quote-mark {
+    font-size: 5rem; line-height: 1; color: var(--teal);
+    font-family: Georgia, serif; font-weight: 700;
+    opacity: 0.6; margin-bottom: 0.5rem;
+  }
+  .quote-text {
+    font-size: 1.05rem; color: #CAE9F5;
+    font-style: italic; line-height: 1.8;
+  }
+
+  .dream-features { display: flex; flex-direction: column; gap: 0.75rem; }
+  .feat-row {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--white);
+    border-radius: 12px; padding: 1rem 1.2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feat-row:hover { transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,119,182,0.12); }
+  .feat-emoji { font-size: 1.4rem; }
+  .feat-label { font-size: 0.95rem; font-weight: 500; color: var(--navy); }
+
+  /* ── THEORY ── */
+  #theory { background: var(--navy2); }
+  .theory-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .theory-card {
+    background: rgba(13,27,42,0.7);
+    border: 1px solid rgba(0,180,216,0.1);
+    border-radius: 16px; padding: 2rem;
+    transition: border-color 0.25s, transform 0.2s;
+  }
+  .theory-card:hover { border-color: rgba(0,180,216,0.35); transform: translateY(-4px); }
+  .theory-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem; font-weight: 700; color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .theory-card h3 { font-size: 1rem; font-weight: 600; color: var(--teal); margin-bottom: 0.75rem; }
+  .theory-card p { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+
+  /* ── DESIGN ── */
+  #design { background: var(--offwhite); }
+  #design .section-title { color: var(--navy); }
+  #design .section-sub { color: var(--gray2); }
+  #design .section-tag { color: var(--teal2); }
+
+  .design-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+  .style-cards { display: flex; flex-direction: column; gap: 0.85rem; }
+  .style-card {
+    background: var(--white);
+    border-radius: 12px; padding: 1rem 1.4rem;
+    display: flex; align-items: center; gap: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .style-label { font-size: 0.78rem; font-weight: 700; color: var(--navy); min-width: 90px; }
+  .style-value { font-size: 0.88rem; color: var(--gray2); }
+
+  .palette-row { display: flex; gap: 0.6rem; margin-top: 1rem; }
+  .swatch {
+    width: 36px; height: 36px; border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    title: attr(data-color);
+  }
+
+  .pages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .page-chip {
+    background: var(--navy);
+    color: var(--white); font-size: 0.88rem;
+    padding: 0.75rem 1rem; border-radius: 10px;
+    display: flex; align-items: center; gap: 0.6rem;
+    transition: background 0.2s;
+  }
+  .page-chip:hover { background: var(--teal2); }
+
+  /* ── TOOL ── */
+  #tool { background: var(--navy); }
+  .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .tool-card {
+    background: var(--navy2);
+    border: 1px solid rgba(0,180,216,0.08);
+    border-radius: 16px; padding: 1.8rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .tool-card:hover { border-color: rgba(0,180,216,0.3); transform: translateY(-3px); }
+  .tool-icon { font-size: 2rem; margin-bottom: 0.9rem; }
+  .tool-card h3 { font-size: 1rem; font-weight: 700; color: var(--teal); margin-bottom: 0.5rem; }
+  .tool-card p { font-size: 0.84rem; color: var(--gray); line-height: 1.65; }
+
+  /* ── RESULT ── */
+  #result {
+    background: var(--offwhite);
+    text-align: center;
+  }
+  #result .section-title { color: var(--navy); }
+  #result .section-sub { color: var(--gray2); margin-left: auto; margin-right: auto; }
+  #result .section-tag { justify-content: center; color: var(--teal2); }
+
+  .result-stats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .big-stat {
+    background: var(--navy);
+    border-radius: 16px; padding: 2rem 2.5rem;
+    min-width: 160px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .big-stat .big-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.8rem; font-weight: 700; color: var(--teal); line-height: 1;
+  }
+  .big-stat .big-label { font-size: 0.8rem; color: var(--gray); margin-top: 0.4rem; }
+
+  .url-bar {
+    display: inline-flex; align-items: center; gap: 0.8rem;
+    background: var(--navy); border-radius: 12px;
+    padding: 1.1rem 2rem; margin-bottom: 3rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    max-width: 100%;
+  }
+  .url-bar .globe { font-size: 1.2rem; }
+  .url-bar span { font-size: 0.9rem; font-weight: 500; color: var(--mint); }
+  .url-bar a { font-size: 0.9rem; color: var(--teal); text-decoration: underline; word-break: break-all; }
+
+  .dtdt-recap { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
+  .recap-card {
+    background: var(--white);
+    border-radius: 12px; padding: 1.2rem 1.5rem;
+    min-width: 160px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    display: flex; align-items: flex-start; gap: 0.7rem;
+  }
+  .recap-letter {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem; font-weight: 700; line-height: 1;
+  }
+  .recap-info .recap-name { font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+  .recap-info .recap-desc { font-size: 0.78rem; color: var(--gray2); margin-top: 0.2rem; line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy2);
+    padding: 2.5rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(0,180,216,0.1);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--white); }
+  footer .logo span { color: var(--teal); }
+  footer p { font-size: 0.78rem; color: var(--gray2); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .dream-layout, .design-layout { grid-template-columns: 1fr; }
+    .theory-grid, .tools-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .result-stats { gap: 1rem; }
+    .dtdt-recap { gap: 0.75rem; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+</style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-    <div class="logo">VELOCITY.</div>
-    <div class="nav-links">
-        <a href="#new">New Arrivals</a>
-        <a href="#trending">Trending</a>
-        <a href="#limited">Limited</a>
-        <a href="#" onclick="toggleHistory()">Purchase History</a>
-    </div>
-    <div class="cart-btn">Cart (0)</div>
+  <div class="nav-logo">Muscle<span>Track</span></div>
+  <ul class="nav-links">
+    <li><a href="#dream">Dream</a></li>
+    <li><a href="#theory">Theory</a></li>
+    <li><a href="#design">Design</a></li>
+    <li><a href="#tool">Tool</a></li>
+    <li><a href="#result">Result</a></li>
+  </ul>
+  <span class="badge-pill">D → T → D → T</span>
 </nav>
 
-<section id="new">
-    <h2>New Arrivals</h2>
-    <div class="product-grid">
-        <div class="card">
-            <div class="badge">NEW</div>
-            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400" alt="Red Sneakers">
-            <h3>Aero-Flight Runner</h3>
-            <p>Ultimate performance shoes.</p>
-            <div class="price">$120.00</div>
-            <button class="buy-btn" onclick="buy('Aero-Flight Runner', 120)">Purchase Now</button>
-        </div>
-        <div class="card">
-            <div class="badge">NEW</div>
-            <img src="https://images.unsplash.com/photo-1580087443155-251f22df815c?auto=format&fit=crop&w=400" alt="Football Shirt">
-            <h3>V-League Jersey</h3>
-            <p>Moisture-wicking tech.</p>
-            <div class="price">$75.00</div>
-            <button class="buy-btn" onclick="buy('V-League Jersey', 75)">Purchase Now</button>
-        </div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+
+  <div class="hero-eyebrow">
+    <div class="step-dot"></div>
+    <span class="eyebrow-text">KGIT Practicum · Foreign Division · 2026</span>
+  </div>
+
+  <h1 class="hero-title">Muscle<span class="accent">Track</span></h1>
+  <p class="hero-sub">A free, open fitness tracking web app — built with the Dream → Theory → Design → Tool framework. No subscriptions. No backend. Just results.</p>
+
+  <div class="hero-cta-row">
+    <a href="#dream" class="btn-primary">↓ See the Framework</a>
+    <a href="#result" class="btn-ghost">🌐 View Live Site</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="num">7<span>+</span></div>
+      <div class="label">Feature Pages</div>
     </div>
+    <div class="stat-item">
+      <div class="num">100<span>%</span></div>
+      <div class="label">Free to Use</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">0</div>
+      <div class="label">Backend Servers</div>
+    </div>
+    <div class="stat-item">
+      <div class="num">∞</div>
+      <div class="label">Local Data Storage</div>
+    </div>
+  </div>
 </section>
 
-<section id="trending">
-    <h2>Trending</h2>
-    <div class="product-grid">
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?auto=format&fit=crop&w=400" alt="Basketball shoes">
-            <h3>Dunk Master X</h3>
-            <p>Basketball series.</p>
-            <div class="price">$150.00</div>
-            <button class="buy-btn" onclick="buy('Dunk Master X', 150)">Purchase Now</button>
-        </div>
+<!-- DREAM -->
+<section id="dream">
+  <div class="section-tag" style="color:var(--teal2)">
+    <div class="bar" style="background:var(--teal)"></div>
+    STEP 1
+  </div>
+  <h2 class="section-title">Dream</h2>
+  <p class="section-sub">Every great product starts with a frustration. Here's the one that started this.</p>
+
+  <div class="dream-layout">
+    <div class="quote-card reveal">
+      <div class="quote-mark">"</div>
+      <p class="quote-text">I want to build an app where I can track my workouts, food, body changes, and progress all in one place — without paying for a subscription.</p>
     </div>
+
+    <div class="dream-features reveal reveal-delay-1">
+      <div class="feat-row">
+        <span class="feat-emoji">💪</span>
+        <span class="feat-label">Track workouts &amp; sets</span>
+      </div>
+      <div class="feat-row">
+        <span class="feat-emoji">🥗</span>
+        <span class="feat-label">Log meals &amp; calories</span>
+      </div>
+      <div class="feat-row">
+        <span class="feat-emoji">📏</span>
+        <span class="feat-label">Monitor body measurements</span>
+      </div>
+      <div class="feat-row">
+        <span class="feat-emoji">📈</span>
+        <span class="feat-label">See visual progress over time</span>
+      </div>
+      <div class="feat-row">
+        <span class="feat-emoji">🆓</span>
+        <span class="feat-label">100% free — no subscription ever</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="limited" style="background: #000; color: white;">
-    <h2 style="color: white; border-color: #fff;">Limited Edition</h2>
-    <div class="product-grid">
-        <div class="card" style="border-color: #333;">
-            <div class="badge" style="background: gold; color: black;">RARE</div>
-            <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=400" alt="Rare Sneakers">
-            <h3>Phantom Stealth VIII</h3>
-            <p>Only 100 pairs made.</p>
-            <div class="price" style="color: gold;">$450.00</div>
-            <button class="buy-btn" style="background: gold; color: black;" onclick="buy('Phantom Stealth VIII', 450)">Claim Pair</button>
-        </div>
+<!-- THEORY -->
+<section id="theory">
+  <div class="section-tag" style="color:var(--gold)">
+    <div class="bar" style="background:var(--gold)"></div>
+    STEP 2
+  </div>
+  <h2 class="section-title">Theory</h2>
+  <p class="section-sub">Why does this product need to exist? Three reasons.</p>
+
+  <div class="theory-grid">
+    <div class="theory-card reveal">
+      <div class="theory-num">01</div>
+      <h3>People want control over their data</h3>
+      <p>Popular apps like MyFitnessPal hide features behind paywalls. Users deserve full access to their own health data without a monthly fee.</p>
     </div>
+    <div class="theory-card reveal reveal-delay-1">
+      <div class="theory-num">02</div>
+      <h3>All-in-one reduces friction</h3>
+      <p>Switching between 3–4 apps for workouts, nutrition, and body stats creates drop-off. One unified dashboard keeps habits consistent.</p>
+    </div>
+    <div class="theory-card reveal reveal-delay-2">
+      <div class="theory-num">03</div>
+      <h3>Visible progress drives motivation</h3>
+      <p>People who regularly review their progress are significantly more likely to maintain healthy habits long-term. Visibility is the engine.</p>
+    </div>
+  </div>
 </section>
 
-<div id="history-modal">
-    <span class="close-history" onclick="toggleHistory()">X</span>
-    <h3>Your Purchase History</h3>
-    <hr><br>
-    <div id="history-list">No purchases yet.</div>
-</div>
+<!-- DESIGN -->
+<section id="design">
+  <div class="section-tag" style="color:var(--accent)">
+    <div class="bar" style="background:var(--accent)"></div>
+    STEP 3
+  </div>
+  <h2 class="section-title">Design</h2>
+  <p class="section-sub">Dark navy, high contrast, sidebar-first. Every visual decision serves the data.</p>
+
+  <div class="design-layout">
+    <div>
+      <h3 style="font-size:1.1rem;font-weight:600;color:var(--teal2);margin-bottom:1.2rem;">Visual Style</h3>
+      <div class="style-cards reveal">
+        <div class="style-card">
+          <span class="style-label">Color Scheme</span>
+          <span class="style-value">Dark navy + purple + teal gradient</span>
+        </div>
+        <div class="style-card">
+          <span class="style-label">Typography</span>
+          <span class="style-value">Inter — clean, modern, readable</span>
+        </div>
+        <div class="style-card">
+          <span class="style-label">Layout</span>
+          <span class="style-value">Fixed sidebar + scrollable main content</span>
+        </div>
+        <div class="style-card">
+          <span class="style-label">Theme</span>
+          <span class="style-value">Dark mode first, high contrast data cards</span>
+        </div>
+      </div>
+      <div class="palette-row">
+        <div class="swatch" style="background:#0D1B2A" title="#0D1B2A Navy"></div>
+        <div class="swatch" style="background:#00B4D8" title="#00B4D8 Teal"></div>
+        <div class="swatch" style="background:#06D6A0" title="#06D6A0 Accent"></div>
+        <div class="swatch" style="background:#FFD166" title="#FFD166 Gold"></div>
+        <div class="swatch" style="background:#90E0EF" title="#90E0EF Mint"></div>
+        <div class="swatch" style="background:#F0F8FF" title="#F0F8FF Off-white"></div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:1.1rem;font-weight:600;color:var(--teal2);margin-bottom:1.2rem;">Pages Built</h3>
+      <div class="pages-grid reveal reveal-delay-1">
+        <div class="page-chip">🏋️ Workout Tracker</div>
+        <div class="page-chip">💪 Strength Progress</div>
+        <div class="page-chip">🥗 Nutrition Tracker</div>
+        <div class="page-chip">😴 Recovery Tracker</div>
+        <div class="page-chip">📏 Body Measurements</div>
+        <div class="page-chip">🎯 Goals Page</div>
+        <div class="page-chip">📸 Progress Photos</div>
+        <div class="page-chip">📊 Dashboard</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOL -->
+<section id="tool">
+  <div class="section-tag" style="color:var(--mint)">
+    <div class="bar" style="background:var(--mint)"></div>
+    STEP 4
+  </div>
+  <h2 class="section-title">Tool</h2>
+  <p class="section-sub">Six technologies. Zero dollars. Fully public.</p>
+
+  <div class="tools-grid">
+    <div class="tool-card reveal">
+      <div class="tool-icon">🌐</div>
+      <h3>GitHub Pages</h3>
+      <p>Free static hosting — the site is public and accessible to anyone with the link, from any device.</p>
+    </div>
+    <div class="tool-card reveal reveal-delay-1">
+      <div class="tool-icon">💾</div>
+      <h3>localStorage</h3>
+      <p>Browser-based storage keeps all user data (workouts, meals, body stats) on-device — no backend needed.</p>
+    </div>
+    <div class="tool-card reveal reveal-delay-2">
+      <div class="tool-icon">🍎</div>
+      <h3>Open Food Facts API</h3>
+      <p>CORS-compatible food search API for the nutrition tracker. Free, open-source, and massive database.</p>
+    </div>
+    <div class="tool-card reveal reveal-delay-1">
+      <div class="tool-icon">🤖</div>
+      <h3>Claude AI (Anthropic)</h3>
+      <p>Used to generate, debug, and iterate all HTML/CSS/JS pages rapidly throughout the development process.</p>
+    </div>
+    <div class="tool-card reveal reveal-delay-2">
+      <div class="tool-icon">✏️</div>
+      <h3>GitHub Web Editor</h3>
+      <p>All edits made directly in the GitHub browser editor — pencil icon → select all → paste → commit.</p>
+    </div>
+    <div class="tool-card reveal reveal-delay-3">
+      <div class="tool-icon">📦</div>
+      <h3>Vanilla HTML/CSS/JS</h3>
+      <p>No frameworks — pure web standards. Works on any device without build tools or dependencies.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="result">
+  <div class="section-tag">
+    <div class="bar" style="background:var(--teal)"></div>
+    THE RESULT
+  </div>
+  <h2 class="section-title">A fully live, public website</h2>
+  <p class="section-sub">Open to anyone with the link. Test it in incognito — if you can open it, your class can too.</p>
+
+  <div class="result-stats reveal">
+    <div class="big-stat">
+      <div class="big-num">7</div>
+      <div class="big-label">Feature Pages</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-num">100%</div>
+      <div class="big-label">Free to Use</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-num">0</div>
+      <div class="big-label">Backend Servers</div>
+    </div>
+    <div class="big-stat">
+      <div class="big-num">∞</div>
+      <div class="big-label">Data Storage (local)</div>
+    </div>
+  </div>
+
+  <div class="url-bar reveal reveal-delay-1">
+    <span class="globe">🌐</span>
+    <span>Public URL:</span>
+    <a href="https://[your-username].github.io/muscletrack" target="_blank">https://[your-username].github.io/muscletrack</a>
+  </div>
+
+  <div class="dtdt-recap reveal reveal-delay-2">
+    <div class="recap-card">
+      <span class="recap-letter" style="color:var(--teal)">D</span>
+      <div class="recap-info">
+        <div class="recap-name">Dream</div>
+        <div class="recap-desc">Free all-in-one fitness tracker</div>
+      </div>
+    </div>
+    <div class="recap-card">
+      <span class="recap-letter" style="color:var(--gold)">T</span>
+      <div class="recap-info">
+        <div class="recap-name">Theory</div>
+        <div class="recap-desc">Remove cost &amp; friction from healthy habits</div>
+      </div>
+    </div>
+    <div class="recap-card">
+      <span class="recap-letter" style="color:var(--accent)">D</span>
+      <div class="recap-info">
+        <div class="recap-name">Design</div>
+        <div class="recap-desc">Dark navy dashboard, 7 pages</div>
+      </div>
+    </div>
+    <div class="recap-card">
+      <span class="recap-letter" style="color:var(--mint)">T</span>
+      <div class="recap-info">
+        <div class="recap-name">Tool</div>
+        <div class="recap-desc">GitHub Pages + Vanilla JS + AI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Muscle<span>Track</span></div>
+  <p>KGIT Practicum · Foreign Division · 2026</p>
+  <p style="font-size:0.75rem;color:var(--gray2)">Built with the D→T→D→T framework</p>
+</footer>
 
 <script>
-    let history = [];
-
-    function buy(name, price) {
-        const date = new Date().toLocaleDateString();
-        history.push({ name, price, date });
-        alert(`Successfully purchased ${name}!`);
-        updateHistory();
-    }
-
-    function updateHistory() {
-        const list = document.getElementById('history-list');
-        if (history.length === 0) return;
-        
-        list.innerHTML = history.map(item => 
-            `<p><strong>${item.name}</strong> - $${item.price} <br><small>${item.date}</small></p><hr style="margin:10px 0; opacity:0.1">`
-        ).join('');
-    }
-
-    function toggleHistory() {
-        const modal = document.getElementById('history-modal');
-        modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-    }
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
 </script>
-
 </body>
 </html>
-
-
-
